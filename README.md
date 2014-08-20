@@ -2,9 +2,9 @@
 
 Moxyproxy a node.js proxy server for Web UI developers:
 
-    * Serve Web UI resources from local development directories.
-    * Proxy REST API calls to a remote server.
-    * Selectively mock those REST API calls to return canned JSON data, for ease of debugging or test automation.
+* Serve Web UI resources from local development directories.
+* Proxy REST API calls to a remote server.
+* Selectively mock those REST API calls to return canned JSON data, for ease of debugging or test automation.
 
 ## Installation
 
