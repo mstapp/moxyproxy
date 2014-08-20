@@ -16,7 +16,13 @@ Next, copy `config-EXAMPLE.js` to `config.js` and it for your own settings. (__S
 
    npm start
 
+Then browse to `http://localhost:3000/` (or whatever port you're configured for).
+
+
 ## Configuration details
 
 (more)
 
+## License
+
+MIT License. See [LICENSE.txt](LICENSE.txt) for details.
