@@ -19,7 +19,14 @@ exports.mock = function(req, res) {
             return;
         }
 
-        res.send( JSON.parse(data) );
+        var data = JSON.parse(data);
+        // allow special key to indicate desired return code,
+        // with the "data" property holding the return data.
+        if (data['__MOXY__status_code']) {
+            res.statusCode = data['__MOXY__status_code'];
+            data = data.data;
+        }
+        res.send( data );
     });
 };
 
