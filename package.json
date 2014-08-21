@@ -1,5 +1,5 @@
 {
-    "name": "oci-proxyserver",
+    "name": "moxyproxy",
     "description": "Development server: serve local webui files, proxy calls to REST API.",
     "version": "0.0.1",
     "private": true,
