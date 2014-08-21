@@ -22,8 +22,8 @@ exports.mock = function(req, res) {
         var data = JSON.parse(data);
         // allow special key to indicate desired return code,
         // with the "data" property holding the return data.
-        if (data['__MOXY__status_code']) {
-            res.statusCode = data['__MOXY__status_code'];
+        if (data['__status__']) {
+            res.statusCode = data['__status__'];
             data = data.data;
         }
         res.send( data );
