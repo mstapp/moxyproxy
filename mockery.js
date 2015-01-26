@@ -3,14 +3,14 @@ var config = require('./config'),
 
 // Returns true if there is mock data for the given request verb + path
 exports.isMocked = function(req) {
-    return fs.existsSync( mockedFilePath(req.method, req.path) );
+    return fs.existsSync( mockedFilePath(req.method, req.path, req.query) );
 };
 
 // Handle the current request by returning mock data.
 // Should only call this function if isMocked returns true for the same request.
 // Returns 200 + the mocked data if found, or 404 if no mocked data found.
 exports.mock = function(req, res) {
-    var fname = mockedFilePath(req.method, req.path);
+    var fname = mockedFilePath(req.method, req.path, req.query);
     console.log('Mocking ' + fname);
     fs.readFile(fname, function(err, data) {
         if (err) {
@@ -19,7 +19,7 @@ exports.mock = function(req, res) {
             return;
         }
 
-        var data = JSON.parse(data);
+        data = JSON.parse(data);
         // allow special key to indicate desired return code,
         // with the "data" property holding the return data.
         if (data['__status__']) {
@@ -36,11 +36,19 @@ exports.mock = function(req, res) {
 // Examples:
 //      GET  /api/v1/foo/bar/1: foo-bar-1.json
 //      POST /api/v1/foo/bar/1: post-foo-bar-1.json
-function mockedFilePath(verb, path) {
+function mockedFilePath(verb, path, query) {
     path = stripPath(path);
     var segs = path.split('/');
     if (verb !== 'GET') segs.unshift(verb.toLowerCase());
-    path = segs.join('-') + '.json'
+    path = segs.join('-');
+
+    // change path?expand=foo.bar,baz,bat -> path-expand-foo.bar,baz,bat.json
+    if (query && query.expand) {
+        path += '-expand-' + query.expand;
+    }
+    path += '.json';
+    // console.log('mockedFilePath - query = ' + query + ' - checking ' + path);
+
     return [config.mockFilesRoot, path].join('/');
 }
 
